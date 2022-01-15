@@ -10,7 +10,7 @@ repo_name=$(git config remote.origin.url | cut -f5 -d'/'|cut -f1 -d'.')
 org_repo=$org_name/$repo_name
 
 echo "--------------------------------------------------------------------------------"
-echo "\e[1;31m Validating the repository - $org_name/$repo_name							\e[0m"
+echo -e "\e[1;31m Validating the repository - $org_name/$repo_name							\e[0m"
 echo "--------------------------------------------------------------------------------"
 echo " "
 
