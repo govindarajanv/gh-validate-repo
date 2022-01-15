@@ -10,13 +10,14 @@ repo_name=$(git config remote.origin.url | cut -f5 -d'/'|cut -f1 -d'.')
 org_repo=$org_name/$repo_name
 
 echo "--------------------------------------------------------------------------------"
-echo "		Validating the repository - '$org_name/$repo_name'													"
+echo "\e[1;31m Validating the repository - $org_name/$repo_name							\e[0m"
+echo "--------------------------------------------------------------------------------"
+echo " "
 
 #Pass arguments through to another command
-echo "--------------------------------------------------------------------------------"
-echo "Open issues:"
+echo "1. Open issues:"
+echo ""
 gh issue list "$@" -R $org_repo
-echo "--------------------------------------------------------------------------------"
 
 ##Pass arguments through to another command
 #echo "--------------------------------------------------------------------------------"
@@ -42,28 +43,44 @@ echo "--------------------------------------------------------------------------
 #echo "--------------------------------------------------------------------------------"
 
 
+echo " "
 # check if README.md exists
-echo "--------------------------------------------------------------------------------"
-echo "			Checking if README is present																							"
+echo "2. Checking if README is present																							"
 FILE="README.md"
-if [ ! -f "./$FILE"]; then
-		echo "$FILE does not exist"
+if [ ! -f "./$FILE" ]; then
+    /usr/bin/printf "\u2717 $FILE doesn't exist\n"
 else
-		echo "$FILE exists"
+    /usr/bin/printf "\xE2\x9C\x94 $FILE exists \n"
 fi
-echo "--------------------------------------------------------------------------------"
 
+echo " "
 # check if .gitignore exists
-echo "--------------------------------------------------------------------------------"
-echo "			Checking if README is present																							"
+echo "3. Checking if README is present																							"
 FILE=".gitignore"
-if [ ! -f "./$FILE"]; then
-		echo "$FILE does not exist"
+if [ ! -f "./$FILE" ]; then
+    /usr/bin/printf "\u2717 $FILE doesn't exist\n"
 else
-		echo "$FILE exists"
+    /usr/bin/printf "\xE2\x9C\x94 $FILE exists \n"
 fi
-echo "--------------------------------------------------------------------------------"
 
-# Check if .gitignore exists
-echo "--------------------------------------------------------------------------------"
-echo "--------------------------------------------------------------------------------"
+echo " "
+# check if workflow yaml exists
+echo "4. Checking if workflow is present																							"
+workflow_count=$(find . \( -name "*.yml" -o -name "*.yaml" \) | grep -i .github/workflows|wc -l)
+if [ $workflow_count -ge 1 ]; then
+    /usr/bin/printf "\xE2\x9C\x94 Workflow exists. Total Workflows found: $workflow_count \n"
+else
+    /usr/bin/printf "\u2717 Workflow doesn't exist\n"
+fi
+
+echo " "
+# check if CODEOWNERS.md exists
+echo "5. Checking if CODEOWNERS.md is present																							"
+FILE="CODEOWNERS.md"
+if [ ! -f "./$FILE" ]; then
+    /usr/bin/printf "\u2717 $FILE doesn't exist\n"
+else
+    /usr/bin/printf "\xE2\x9C\x94 $FILE exists \n"
+fi
+
+
