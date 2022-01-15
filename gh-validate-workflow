@@ -55,7 +55,7 @@ fi
 
 echo " "
 # check if .gitignore exists
-echo "3. Checking if README is present																							"
+echo "3. Checking if .gitignore is present																							"
 FILE=".gitignore"
 if [ ! -f "./$FILE" ]; then
     /usr/bin/printf "\u2717 $FILE doesn't exist\n"
