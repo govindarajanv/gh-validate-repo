@@ -1,35 +1,69 @@
 #!/usr/bin/env bash
 set -e
 
-echo "Hello gh-validate-workflow!"
+# get org name
+org_name=$(git config remote.origin.url | cut -f4 -d'/')
 
-# Snippets to help get started:
+# get repo name
+repo_name=$(git config remote.origin.url | cut -f5 -d'/'|cut -f1 -d'.')
 
-# Determine if an executable is in the PATH
-# if ! type -p ruby >/dev/null; then
-#   echo "Ruby not found on the system" >&2
-#   exit 1
-# fi
+org_repo=$org_name/$repo_name
 
-# Pass arguments through to another command
-# gh issue list "$@" -R cli/cli
+echo "--------------------------------------------------------------------------------"
+echo "		Validating the repository - '$org_name/$repo_name'													"
 
+#Pass arguments through to another command
+echo "--------------------------------------------------------------------------------"
+echo "Open issues:"
+gh issue list "$@" -R $org_repo
+echo "--------------------------------------------------------------------------------"
+
+#Pass arguments through to another command
+echo "--------------------------------------------------------------------------------"
 # Using the gh api command to retrieve and format information
-# QUERY='
-#   query($endCursor: String) {
-#     viewer {
-#       repositories(first: 100, after: $endCursor) {
-#         nodes {
-#           nameWithOwner
-#           stargazerCount
-#         }
-#       }
-#     }
-#   }
-# '
-# TEMPLATE='
-#   {{- range $repo := .data.viewer.repositories.nodes -}}
-#     {{- printf "name: %s - stargazers: %v\n" $repo.nameWithOwner $repo.stargazerCount -}}
-#   {{- end -}}
-# '
-# exec gh api graphql -f query="${QUERY}" --paginate --template="${TEMPLATE}"
+ QUERY='
+   query($endCursor: String) {
+     viewer {
+       repositories(first: 100, after: $endCursor) {
+         nodes {
+           nameWithOwner
+           stargazerCount
+         }
+       }
+     }
+   }
+ '
+ TEMPLATE='
+   {{- range $repo := .data.viewer.repositories.nodes -}}
+     {{- printf "name: %s - stargazers: %v\n" $repo.nameWithOwner $repo.stargazerCount -}}
+   {{- end -}}
+ '
+ exec gh api graphql -f query="${QUERY}" --paginate --template="${TEMPLATE}"
+echo "--------------------------------------------------------------------------------"
+
+
+# check if README.md exists
+echo "--------------------------------------------------------------------------------"
+echo "			Checking if README is present																							"
+FILE="README.md"
+if [ ! -f "./$FILE"]; then
+		echo "$FILE does not exist"
+else
+		echo "$FILE exists"
+fi
+echo "--------------------------------------------------------------------------------"
+
+# check if .gitignore exists
+echo "--------------------------------------------------------------------------------"
+echo "			Checking if README is present																							"
+FILE=".gitignore"
+if [ ! -f "./$FILE"]; then
+		echo "$FILE does not exist"
+else
+		echo "$FILE exists"
+fi
+echo "--------------------------------------------------------------------------------"
+
+# Check if .gitignore exists
+echo "--------------------------------------------------------------------------------"
+echo "--------------------------------------------------------------------------------"
