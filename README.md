@@ -9,3 +9,4 @@ This extension will help you to validate a repository with custom validations se
 	$ gh extension install govindarajanv/gh-validate-repo </br>
  Run the extension: </br>
 	$ gh validate-repo </br>
+![How it works](assets/HowItWorks.png)
