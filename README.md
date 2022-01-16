@@ -1,4 +1,4 @@
-# GH Extension - Validate Repository
+# GH Extension - Validate a Git repository
 
 Validate Repository Extension             
 
@@ -6,7 +6,10 @@ This extension will help you to validate a repository with custom validations se
  
  Usage: <br/>
  Install the extension: </br>
-	$ gh extension install govindarajanv/gh-validate-repo </br>
+	```$ gh extension install govindarajanv/gh-validate-repo``` </br>
  Run the extension: </br>
-	$ gh validate-repo </br>
+	```
+	$ gh validate-repo
+	```
+	
 ![How it works](assets/HowItWorks.png)
