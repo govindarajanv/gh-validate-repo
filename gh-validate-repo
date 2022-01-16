@@ -2,6 +2,27 @@
 clear
 set -e
 
+verbose=""
+name_arg=""
+while [ $# -gt 0 ]; do
+  case "$1" in
+  -h|--help)
+    clear
+		echo ""
+    /usr/bin/printf "\e[1mValidate Repository Extension             \e[0m\n\n"
+    echo "This extension will help you to validate a repository with custom validations set by the platform team"
+		echo " "
+		echo " Usage: "
+		echo " # Install the extension:"
+		echo "	$ gh extension install govindarajanv/gh-validate-repo"
+		echo " # Run the extension: "
+		echo "	$ gh validate-repo"
+    exit 0
+    ;;
+  esac
+  shift
+done
+
 # get org name
 org_name=$(git config remote.origin.url | cut -f4 -d'/')
 
